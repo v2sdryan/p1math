@@ -188,6 +188,28 @@
   pointer-events: none;
 }
 
+.shape-canvas--fallback {
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.ios-fallback-stage {
+  display: grid;
+  place-items: center;
+  width: min(520px, 92%);
+}
+
+.ios-fallback-stage svg {
+  width: min(430px, 100%);
+  height: auto;
+  filter: drop-shadow(0 18px 18px rgba(20, 52, 72, 0.16));
+}
+
+.ios-fallback-stage .shape-name-tag {
+  margin-top: -10px;
+}
+
 .shape-name-tag {
   padding: 5px 12px;
   border: 1px solid rgba(20, 52, 72, 0.08);
@@ -908,6 +930,14 @@
 
   .shape-canvas {
     height: min(300px, 52svh);
+  }
+
+  .shape-canvas--fallback {
+    min-height: 260px;
+  }
+
+  .ios-fallback-stage {
+    width: min(310px, 92%);
   }
 
   .shape-name-tag {

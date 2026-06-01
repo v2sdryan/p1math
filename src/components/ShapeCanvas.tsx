@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { ContactShadows, OrbitControls } from '@react-three/drei'
+import { FallbackShapeDiagram } from './FallbackShapeDiagram'
 import { ShapeModel } from './ShapeModel'
 import type { Shape } from '../data/shapes'
 
@@ -13,6 +15,22 @@ type ShapeCanvasProps = {
 }
 
 export function ShapeCanvas({ shape, mini = false, pushKey = 0, sides, heightScale = 1, displayName }: ShapeCanvasProps) {
+  const [useFallbackDiagram] = useState(() => {
+    if (typeof window === 'undefined') return false
+    const ua = window.navigator.userAgent
+    const isIOS = /iPad|iPhone|iPod/.test(ua)
+    const isTouchMac = window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1
+    return isIOS || isTouchMac
+  })
+
+  if (!mini && useFallbackDiagram) {
+    return (
+      <div className="shape-canvas shape-canvas--fallback">
+        <FallbackShapeDiagram shape={shape} sides={sides} heightScale={heightScale} displayName={displayName} />
+      </div>
+    )
+  }
+
   return (
     <div className={`shape-canvas ${mini ? 'shape-canvas--mini' : ''}`}>
       <Canvas
