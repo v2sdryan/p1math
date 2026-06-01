@@ -191,23 +191,30 @@
 .shape-canvas--fallback {
   display: grid;
   place-items: center;
-  padding: 16px;
+  overflow: hidden;
+  padding: 8px 16px 12px;
 }
 
 .ios-fallback-stage {
   display: grid;
   place-items: center;
-  width: min(520px, 92%);
+  width: min(520px, 94%);
+  max-height: 100%;
+  user-select: none;
+  touch-action: none;
+  cursor: grab;
+}
+
+.ios-fallback-stage:active {
+  cursor: grabbing;
 }
 
 .ios-fallback-stage svg {
-  width: min(430px, 100%);
+  width: min(440px, 100%);
+  max-height: min(315px, 100%);
   height: auto;
+  overflow: visible;
   filter: drop-shadow(0 18px 18px rgba(20, 52, 72, 0.16));
-}
-
-.ios-fallback-stage .shape-name-tag {
-  margin-top: -10px;
 }
 
 .shape-name-tag {
@@ -933,11 +940,17 @@
   }
 
   .shape-canvas--fallback {
-    min-height: 260px;
+    min-height: 250px;
+    padding: 6px 10px 10px;
   }
 
   .ios-fallback-stage {
-    width: min(310px, 92%);
+    width: min(300px, 94%);
+  }
+
+  .ios-fallback-stage svg {
+    width: min(300px, 100%);
+    max-height: 236px;
   }
 
   .shape-name-tag {
