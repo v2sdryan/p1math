@@ -8,34 +8,35 @@ type ShapeModelProps = {
   shape: Pick<Shape, 'kind' | 'color' | 'name' | 'canRoll'>
   mini?: boolean
   sides?: number
+  heightScale?: number
   pushKey?: number
   displayName?: string
 }
 
-function geometryFor(kind: ShapeKind, sides?: number) {
+function geometryFor(kind: ShapeKind, sides?: number, heightScale = 1) {
   const polygonSides = sides ?? 3
 
   switch (kind) {
     case 'triangular-prism':
-      return <cylinderGeometry args={[0.9, 0.9, 1.45, polygonSides]} />
+      return <cylinderGeometry args={[0.9, 0.9, 1.45 * heightScale, polygonSides]} />
     case 'rectangular-prism':
-      return <boxGeometry args={[1.45, 1.05, 1.05]} />
+      return <boxGeometry args={[1.45, 1.05 * heightScale, 1.05]} />
     case 'pentagonal-prism':
-      return <cylinderGeometry args={[0.86, 0.86, 1.45, sides ?? 5]} />
+      return <cylinderGeometry args={[0.86, 0.86, 1.45 * heightScale, sides ?? 5]} />
     case 'triangular-pyramid':
-      return <coneGeometry args={[1, 1.35, polygonSides]} />
+      return <coneGeometry args={[1, 1.35 * heightScale, polygonSides]} />
     case 'square-pyramid':
-      return <coneGeometry args={[1, 1.35, sides ?? 4]} />
+      return <coneGeometry args={[1, 1.35 * heightScale, sides ?? 4]} />
     case 'sphere':
-      return <sphereGeometry args={[0.78, 48, 32]} />
+      return <sphereGeometry args={[0.78 * Math.min(heightScale, 1.25), 48, 32]} />
     case 'cylinder':
-      return <cylinderGeometry args={[0.72, 0.72, 1.35, 48]} />
+      return <cylinderGeometry args={[0.72, 0.72, 1.35 * heightScale, 48]} />
     case 'cone':
-      return <coneGeometry args={[0.8, 1.35, 48]} />
+      return <coneGeometry args={[0.8, 1.35 * heightScale, 48]} />
   }
 }
 
-export function ShapeModel({ shape, mini = false, sides, pushKey = 0, displayName }: ShapeModelProps) {
+export function ShapeModel({ shape, mini = false, sides, heightScale = 1, pushKey = 0, displayName }: ShapeModelProps) {
   const groupRef = useRef<THREE.Group>(null)
   const meshRef = useRef<THREE.Mesh>(null)
   const pushStartRef = useRef<number | null>(null)
@@ -83,7 +84,7 @@ export function ShapeModel({ shape, mini = false, sides, pushKey = 0, displayNam
   return (
     <group ref={groupRef} rotation={rotation} scale={mini ? 0.9 : 1}>
       <mesh ref={meshRef} castShadow receiveShadow>
-        {geometryFor(shape.kind, sides)}
+        {geometryFor(shape.kind, sides, heightScale)}
         <meshStandardMaterial color={shape.color} roughness={0.48} metalness={0.04} />
         <Edges color="#0f172a" threshold={18} />
       </mesh>

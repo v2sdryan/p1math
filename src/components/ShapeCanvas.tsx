@@ -8,10 +8,11 @@ type ShapeCanvasProps = {
   mini?: boolean
   pushKey?: number
   sides?: number
+  heightScale?: number
   displayName?: string
 }
 
-export function ShapeCanvas({ shape, mini = false, pushKey = 0, sides, displayName }: ShapeCanvasProps) {
+export function ShapeCanvas({ shape, mini = false, pushKey = 0, sides, heightScale = 1, displayName }: ShapeCanvasProps) {
   return (
     <div className={`shape-canvas ${mini ? 'shape-canvas--mini' : ''}`}>
       <Canvas
@@ -22,7 +23,14 @@ export function ShapeCanvas({ shape, mini = false, pushKey = 0, sides, displayNa
         <ambientLight intensity={1.4} />
         <directionalLight castShadow position={[3, 5, 4]} intensity={2.4} />
         <spotLight position={[-4, 5, 2]} angle={0.35} penumbra={0.5} intensity={1.3} />
-        <ShapeModel shape={shape} mini={mini} pushKey={pushKey} sides={sides} displayName={displayName} />
+        <ShapeModel
+          shape={shape}
+          mini={mini}
+          pushKey={pushKey}
+          sides={sides}
+          heightScale={heightScale}
+          displayName={displayName}
+        />
         <ContactShadows position={[0, -1.15, 0]} opacity={0.3} scale={4} blur={2} far={2.4} />
         {!mini && <OrbitControls enablePan={false} enableZoom={false} />}
       </Canvas>

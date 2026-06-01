@@ -276,6 +276,43 @@
   line-height: 1.12;
 }
 
+.height-control {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #16435c;
+  font-weight: 900;
+}
+
+.height-control label,
+.slider-scale {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.height-control strong {
+  color: #0f766e;
+}
+
+.height-control input[type='range'] {
+  width: 100%;
+  height: 34px;
+  margin: 0;
+  accent-color: #0f766e;
+  cursor: pointer;
+}
+
+.slider-scale {
+  color: #5b7584;
+  font-size: 13px;
+  line-height: 1;
+}
+
 .corner-picker {
   display: grid;
   gap: 10px;
@@ -661,6 +698,16 @@
     padding: 10px;
   }
 
+  .height-control {
+    gap: 6px;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  .height-control input[type='range'] {
+    height: 28px;
+  }
+
   .corner-button {
     min-height: 38px;
   }
@@ -750,25 +797,106 @@
 }
 
 @media (max-width: 620px) {
+  .app-shell {
+    min-height: 100svh;
+  }
+
   .top-nav {
     position: sticky;
     top: 0;
   }
 
   .top-nav {
-    align-items: flex-start;
+    gap: 10px;
+    align-items: stretch;
     flex-direction: column;
-    padding: 14px 18px;
+    padding: 10px 12px;
   }
 
   .top-nav > div {
     width: 100%;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .brand {
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .nav-tab {
+    min-height: 42px;
+    padding: 0 10px;
+    border: 1px solid #d7e6ea !important;
+    background: #ffffff !important;
+    font-weight: 900 !important;
+  }
+
+  .nav-tab--active {
+    color: #ffffff !important;
+    background: #12324a !important;
+    border-color: #12324a !important;
   }
 
   .lesson-section,
   .practice-section {
-    width: min(100% - 20px, 1180px);
+    width: min(100% - 16px, 1180px);
+  }
+
+  .lesson-section {
+    padding: 18px 0 28px;
+  }
+
+  .practice-section {
+    margin-top: 10px;
+    padding: 12px;
+  }
+
+  .section-heading {
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .section-heading h1 {
+    font-size: clamp(28px, 9vw, 36px);
+    line-height: 1.08;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(26px, 8vw, 32px);
+  }
+
+  .section-heading p {
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .nav-action,
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .lesson-grid {
+    gap: 12px;
+  }
+
+  .viewer-panel,
+  .info-panel,
+  .practice-section {
+    box-shadow: 0 14px 34px rgba(38, 82, 103, 0.12);
+  }
+
+  .viewer-topline {
+    padding: 12px 12px 0;
+    font-size: 16px;
+  }
+
+  .rotate-note {
+    font-size: 13px;
   }
 
   .viewer-topline,
@@ -779,16 +907,142 @@
   }
 
   .shape-canvas {
-    height: 330px;
+    height: min(300px, 52svh);
   }
 
-  .shape-tabs,
-  .shape-bank,
+  .shape-name-tag {
+    font-size: 14px;
+  }
+
+  .push-row {
+    gap: 10px;
+    padding: 0 12px 14px;
+  }
+
+  .push-row p {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .info-panel {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .shape-tabs {
+    gap: 8px;
+  }
+
+  .shape-tab {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .fact-box {
+    padding: 12px;
+  }
+
+  .fact-box h2 {
+    font-size: 21px;
+  }
+
+  .height-control,
+  .corner-picker {
+    padding: 10px;
+  }
+
+  .corner-picker > div {
+    gap: 6px;
+  }
+
+  .corner-button {
+    min-height: 38px;
+    font-size: 16px;
+  }
+
+  .fact-box ul {
+    gap: 8px;
+  }
+
+  .fact-box li,
+  .look-question {
+    font-size: 15px;
+  }
+
+  .fact-box li {
+    padding: 9px 10px;
+  }
+
+  .look-question {
+    margin-top: 10px;
+  }
+
+  .practice-workspace {
+    gap: 10px;
+  }
+
+  .shape-bank {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    min-height: 0;
+    padding: 8px;
+  }
+
+  .shape-token {
+    min-height: 78px;
+    padding: 5px;
+  }
+
+  .preview-stage {
+    height: 66px;
+  }
+
+  .preview-stage svg {
+    width: min(92px, 64%);
+    height: 52px;
+  }
+
+  .feedback-line {
+    min-height: 0;
+    margin: 0;
+    padding: 10px 12px;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
   .drop-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 
-  .practice-section {
-    padding: 18px;
+  .drop-zone {
+    min-height: 132px;
+    padding: 10px;
+  }
+
+  .drop-zone__head {
+    min-height: 0;
+    margin-bottom: 8px;
+  }
+
+  .drop-zone h3 {
+    font-size: 19px;
+  }
+
+  .drop-zone p {
+    font-size: 12px;
+  }
+
+  .shape-token--placed {
+    min-height: 58px;
+  }
+
+  .shape-token--placed .preview-stage {
+    height: 46px;
+  }
+
+  .shape-token--placed .preview-stage svg {
+    width: min(74px, 56%);
+    height: 38px;
   }
 }

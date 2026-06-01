@@ -13,10 +13,18 @@ export function LessonPanel({ shapes, onStartPractice }: LessonPanelProps) {
   const [activeId, setActiveId] = useState(shapes[0].id)
   const [pushKey, setPushKey] = useState(0)
   const [cornerCounts, setCornerCounts] = useState({ prism: 3, pyramid: 4 })
+  const [heightScales, setHeightScales] = useState<Record<string, number>>({
+    prism: 1,
+    pyramid: 1,
+    sphere: 1,
+    cylinder: 1,
+  })
   const activeShape = shapes.find((shape) => shape.id === activeId) ?? shapes[0]
   const ActiveIcon = activeShape.icon
   const canChangeCorners = activeShape.id === 'prism' || activeShape.id === 'pyramid'
   const activeCorners = activeShape.id === 'pyramid' ? cornerCounts.pyramid : cornerCounts.prism
+  const activeHeight = heightScales[activeShape.id] ?? 1
+  const heightLabel = Math.round(activeHeight * 100)
   const displayName = canChangeCorners ? `${activeCorners}角${activeShape.id === 'pyramid' ? '錐' : '柱'}` : activeShape.name
   const dynamicFacts = canChangeCorners
     ? [
@@ -35,6 +43,10 @@ export function LessonPanel({ shapes, onStartPractice }: LessonPanelProps) {
     setCornerCounts((current) =>
       activeShape.id === 'pyramid' ? { ...current, pyramid: corners } : { ...current, prism: corners },
     )
+  }
+
+  function updateHeight(height: number) {
+    setHeightScales((current) => ({ ...current, [activeShape.id]: height }))
   }
 
   return (
@@ -65,6 +77,7 @@ export function LessonPanel({ shapes, onStartPractice }: LessonPanelProps) {
             shape={activeShape}
             pushKey={pushKey}
             sides={canChangeCorners ? activeCorners : undefined}
+            heightScale={activeHeight}
             displayName={displayName}
           />
           <div className="push-row">
@@ -95,6 +108,26 @@ export function LessonPanel({ shapes, onStartPractice }: LessonPanelProps) {
           </div>
 
           <div className="fact-box">
+            <div className="height-control">
+              <label htmlFor="shape-height">
+                <span>調較高度</span>
+                <strong>{heightLabel}%</strong>
+              </label>
+              <input
+                id="shape-height"
+                type="range"
+                min="70"
+                max="150"
+                step="5"
+                value={heightLabel}
+                onChange={(event) => updateHeight(Number(event.target.value) / 100)}
+                aria-label={`${displayName} 高度`}
+              />
+              <div className="slider-scale" aria-hidden="true">
+                <span>矮</span>
+                <span>高</span>
+              </div>
+            </div>
             {canChangeCorners && (
               <div className="corner-picker" aria-label={`${activeShape.name} 角數選擇`}>
                 <span>揀底面角數</span>
