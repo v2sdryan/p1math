@@ -7,25 +7,69 @@ type FallbackShapeDiagramProps = {
   displayName?: string
 }
 
-function regularPolygonPoints(cx: number, cy: number, radius: number, sides: number, rotation = -Math.PI / 2) {
+type Point = {
+  x: number
+  y: number
+}
+
+function polygonPointList(cx: number, cy: number, radiusX: number, radiusY: number, sides: number, rotation = -Math.PI / 2) {
   return Array.from({ length: sides }, (_, index) => {
     const angle = rotation + (index * Math.PI * 2) / sides
-    return `${cx + Math.cos(angle) * radius},${cy + Math.sin(angle) * radius}`
-  }).join(' ')
+    return {
+      x: cx + Math.cos(angle) * radiusX,
+      y: cy + Math.sin(angle) * radiusY,
+    }
+  })
+}
+
+function pointsToString(points: Point[]) {
+  return points.map((point) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(' ')
+}
+
+function regularPolygonPoints(cx: number, cy: number, radius: number, sides: number, rotation = -Math.PI / 2) {
+  return pointsToString(polygonPointList(cx, cy, radius, radius, sides, rotation))
 }
 
 function PrismDiagram({ color, sides = 3, heightScale = 1 }: { color: string; sides?: number; heightScale?: number }) {
-  const front = regularPolygonPoints(82, 78, 48, sides)
-  const back = regularPolygonPoints(130, 50, 48, sides)
-  const squeeze = Math.max(0.78, Math.min(heightScale, 1.42))
+  const safeSides = Math.max(3, Math.min(7, sides))
+  const radiusX = safeSides === 3 ? 44 : 46
+  const radiusY = (safeSides === 3 ? 42 : 44) * Math.max(0.78, Math.min(heightScale, 1.35))
+  const front = polygonPointList(96, 92, radiusX, radiusY, safeSides, -Math.PI / 2)
+  const back = front.map((point) => ({ x: point.x + 48, y: point.y - 28 }))
+  const sideFaces = front.map((point, index) => {
+    const next = (index + 1) % safeSides
+    return [point, front[next], back[next], back[index]]
+  })
+  const visibleFaces = sideFaces
+    .map((face, index) => ({ face, index, centerX: face.reduce((sum, point) => sum + point.x, 0) / face.length }))
+    .sort((a, b) => a.centerX - b.centerX)
 
   return (
-    <g style={{ transform: `scaleY(${squeeze})`, transformOrigin: '120px 78px' }}>
-      <polygon points={back} fill="#bdf4ee" stroke="#0b766d" strokeWidth="3" />
-      <polygon points={front} fill={color} opacity="0.82" stroke="#0b766d" strokeWidth="3" />
-      <path d="M82 30 130 2M130 78 178 50M82 126 130 98" stroke="#0b766d" strokeWidth="3" opacity="0.75" />
-      <polygon points="82,30 130,2 178,50 130,78" fill="#d8fbf7" opacity="0.88" stroke="#0b766d" strokeWidth="3" />
-      <polygon points="130,78 178,50 178,98 130,126" fill="#62d1c5" opacity="0.9" stroke="#0b766d" strokeWidth="3" />
+    <g>
+      <polygon points={pointsToString(back)} fill="#d7faf6" stroke="#0b766d" strokeWidth="3.4" opacity="0.96" />
+      {visibleFaces.map(({ face, index, centerX }) => (
+        <polygon
+          key={index}
+          points={pointsToString(face)}
+          fill={centerX > 122 ? '#61d2c7' : '#91e5dc'}
+          stroke="#0b766d"
+          strokeWidth="3.4"
+          opacity={index % 2 === 0 ? 0.92 : 0.8}
+        />
+      ))}
+      <polygon points={pointsToString(front)} fill={color} stroke="#0b766d" strokeWidth="3.8" opacity="0.86" />
+      {front.map((point, index) => (
+        <line
+          key={`edge-${index}`}
+          x1={point.x}
+          y1={point.y}
+          x2={back[index].x}
+          y2={back[index].y}
+          stroke="#0b766d"
+          strokeWidth="3"
+          opacity="0.72"
+        />
+      ))}
     </g>
   )
 }
