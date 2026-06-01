@@ -1,10 +1,8 @@
-main {
+.app-shell {
   min-height: 100svh;
 }
 
 .top-nav {
-  position: sticky;
-  top: 0;
   z-index: 20;
   display: flex;
   align-items: center;
@@ -16,16 +14,19 @@ main {
   backdrop-filter: blur(16px);
 }
 
-.top-nav a {
+.top-nav button {
+  border: 0;
+  background: transparent;
   color: #16435c;
   font-size: 16px;
   font-weight: 700;
-  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
 }
 
 .top-nav > div {
   display: flex;
-  gap: 18px;
+  gap: 8px;
 }
 
 .brand {
@@ -34,6 +35,22 @@ main {
   color: #0f766e;
   font-size: 20px;
   font-weight: 900;
+  padding: 4px 0;
+}
+
+.nav-tab {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 8px;
+}
+
+.nav-tab--active {
+  color: #ffffff !important;
+  background: #12324a !important;
+}
+
+.app-page[hidden] {
+  display: none;
 }
 
 .lesson-section,
@@ -324,6 +341,11 @@ main {
   padding: 28px;
 }
 
+.practice-workspace {
+  display: grid;
+  gap: 16px;
+}
+
 .shape-bank {
   display: grid;
   grid-template-columns: repeat(4, minmax(132px, 1fr));
@@ -506,7 +528,219 @@ main {
   }
 }
 
+@media (min-width: 760px) {
+  .app-shell {
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .top-nav {
+    height: 56px;
+    padding: 8px 28px;
+  }
+
+  .app-page {
+    height: calc(100svh - 56px);
+    overflow: hidden;
+  }
+
+  .lesson-section,
+  .practice-section {
+    width: min(1180px, calc(100% - 32px));
+  }
+
+  .lesson-section {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: 100%;
+    padding: 24px 0;
+  }
+
+  .lesson-grid {
+    min-height: 0;
+  }
+
+  .viewer-panel,
+  .info-panel {
+    min-height: 0;
+  }
+
+  .shape-canvas {
+    height: min(430px, calc(100svh - 310px));
+  }
+
+  .practice-section {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: calc(100% - 32px);
+    margin-top: 16px;
+    padding: 18px;
+  }
+
+  .practice-workspace {
+    min-height: 0;
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 760px) and (max-height: 850px) {
+  .section-heading {
+    margin-bottom: 14px;
+  }
+
+  .section-heading h1 {
+    font-size: clamp(32px, 4.2vw, 50px);
+  }
+
+  .section-heading h2 {
+    font-size: 34px;
+  }
+
+  .section-heading p {
+    margin-top: 6px;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .nav-action,
+  .primary-button,
+  .secondary-button {
+    min-height: 42px;
+    font-size: 16px;
+  }
+
+  .lesson-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+    gap: 14px;
+  }
+
+  .viewer-topline {
+    padding: 14px 18px 0;
+  }
+
+  .shape-canvas {
+    height: min(350px, calc(100svh - 285px));
+  }
+
+  .push-row {
+    padding: 0 18px 16px;
+  }
+
+  .push-row p,
+  .look-question,
+  .fact-box li {
+    font-size: 15px;
+  }
+
+  .info-panel {
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .shape-tab {
+    min-height: 46px;
+    font-size: 16px;
+  }
+
+  .fact-box {
+    padding: 16px;
+  }
+
+  .fact-box h2 {
+    font-size: 22px;
+  }
+
+  .corner-picker {
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 10px;
+  }
+
+  .corner-button {
+    min-height: 38px;
+  }
+
+  .fact-box ul {
+    gap: 8px;
+  }
+
+  .fact-box li {
+    padding: 9px 10px;
+  }
+
+  .look-question {
+    margin-top: 12px;
+  }
+
+  .practice-section {
+    height: calc(100% - 24px);
+    margin-top: 12px;
+    padding: 16px;
+  }
+
+  .shape-bank {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    min-height: 0;
+    padding: 10px;
+  }
+
+  .shape-token {
+    min-height: 88px;
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  .shape-token--placed {
+    min-height: 72px;
+  }
+
+  .preview-stage {
+    height: 58px;
+  }
+
+  .preview-stage svg {
+    height: 66px;
+    width: min(108px, 88%);
+  }
+
+  .feedback-line {
+    min-height: 40px;
+    margin: 0;
+    padding: 9px 12px;
+    font-size: 15px;
+  }
+
+  .drop-grid {
+    gap: 10px;
+    min-height: 0;
+  }
+
+  .drop-zone {
+    min-height: 0;
+    padding: 10px;
+  }
+
+  .drop-zone__head {
+    min-height: 56px;
+    gap: 8px;
+  }
+
+  .drop-zone h3 {
+    font-size: 20px;
+  }
+
+  .drop-zone p {
+    font-size: 12px;
+  }
+}
+
 @media (max-width: 620px) {
+  .top-nav {
+    position: sticky;
+    top: 0;
+  }
+
   .top-nav {
     align-items: flex-start;
     flex-direction: column;

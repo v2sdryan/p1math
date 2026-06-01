@@ -13,15 +13,21 @@ function TriangularPrism({ color, id }: SvgShapeProps) {
   return (
     <svg viewBox="0 0 160 110" role="img" aria-label="三角柱圖形">
       <defs>
-        <linearGradient id={`${id}-main`} x1="0%" x2="100%">
+        <linearGradient id={`${id}-top`} x1="0%" x2="100%">
+          <stop offset="0%" stopColor="#c8f8f2" />
+          <stop offset="100%" stopColor="#77d9cf" />
+        </linearGradient>
+        <linearGradient id={`${id}-side`} x1="0%" x2="100%">
           <stop offset="0%" stopColor="#8de2d8" />
           <stop offset="100%" stopColor={color} />
         </linearGradient>
       </defs>
-      <polygon points="28,30 62,16 62,78 28,92" fill="#9ce7df" stroke="#10766e" strokeWidth="2" />
-      <polygon points="62,16 130,34 130,96 62,78" fill={`url(#${id}-main)`} stroke="#10766e" strokeWidth="2" />
-      <polygon points="28,30 96,48 130,34 62,16" fill="#baf2ec" stroke="#10766e" strokeWidth="2" />
-      <polygon points="28,92 96,110 130,96 62,78" fill="#33b7a4" opacity="0.82" />
+      <polygon points="34,22 18,82 70,82" fill="#c8f8f2" stroke="#10766e" strokeWidth="2.2" />
+      <polygon points="92,34 76,94 128,94" fill="#6fcfc5" stroke="#10766e" strokeWidth="2.2" />
+      <polygon points="34,22 92,34 128,94 70,82" fill={`url(#${id}-top)`} stroke="#10766e" strokeWidth="2.2" />
+      <polygon points="18,82 76,94 128,94 70,82" fill="#38b9aa" stroke="#10766e" strokeWidth="2.2" />
+      <polygon points="34,22 92,34 76,94 18,82" fill={`url(#${id}-side)`} stroke="#10766e" strokeWidth="2.2" />
+      <line x1="70" y1="82" x2="128" y2="94" stroke="#10766e" strokeWidth="2.2" />
     </svg>
   )
 }

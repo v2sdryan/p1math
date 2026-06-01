@@ -6,9 +6,10 @@ import { ShapeCanvas } from './ShapeCanvas'
 
 type LessonPanelProps = {
   shapes: Shape[]
+  onStartPractice: () => void
 }
 
-export function LessonPanel({ shapes }: LessonPanelProps) {
+export function LessonPanel({ shapes, onStartPractice }: LessonPanelProps) {
   const [activeId, setActiveId] = useState(shapes[0].id)
   const [pushKey, setPushKey] = useState(0)
   const [cornerCounts, setCornerCounts] = useState({ prism: 3, pyramid: 4 })
@@ -43,9 +44,9 @@ export function LessonPanel({ shapes }: LessonPanelProps) {
           <h1>小一數學：認識立體圖形</h1>
           <p>用手指拖動 3D 圖形，轉一圈睇清楚佢有冇平面、尖頂同圓圓嘅面。</p>
         </div>
-        <a className="nav-action" href="#practice">
+        <button type="button" className="nav-action" onClick={onStartPractice}>
           開始練習
-        </a>
+        </button>
       </div>
 
       <div className="lesson-grid">

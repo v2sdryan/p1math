@@ -118,29 +118,31 @@ export function SortingGame() {
         </button>
       </div>
 
-      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-        <div className="shape-bank" aria-label="可拖拉立體圖形">
-          {remainingShapes.map((shape) => (
-            <DraggableShape key={shape.id} shape={shape} />
-          ))}
-        </div>
+      <div className="practice-workspace">
+        <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+          <div className="shape-bank" aria-label="可拖拉立體圖形">
+            {remainingShapes.map((shape) => (
+              <DraggableShape key={shape.id} shape={shape} />
+            ))}
+          </div>
 
-        <div className="feedback-line" aria-live="polite">
-          {completed ? '全部完成，好叻！可以按「再玩一次」挑戰自己。' : message}
-        </div>
+          <div className="feedback-line" aria-live="polite">
+            {completed ? '全部完成，好叻！可以按「再玩一次」挑戰自己。' : message}
+          </div>
 
-        <div className="drop-grid">
-          {categories.map((category) => (
-            <DropZone key={category} category={category}>
-              {placedByCategory[category].map((shape) => (
-                <DraggableShape key={shape.id} shape={shape} disabled />
-              ))}
-            </DropZone>
-          ))}
-        </div>
+          <div className="drop-grid">
+            {categories.map((category) => (
+              <DropZone key={category} category={category}>
+                {placedByCategory[category].map((shape) => (
+                  <DraggableShape key={shape.id} shape={shape} disabled />
+                ))}
+              </DropZone>
+            ))}
+          </div>
 
-        <DragOverlay>{activeShape ? <DraggableShape shape={activeShape} /> : null}</DragOverlay>
-      </DndContext>
+          <DragOverlay>{activeShape ? <DraggableShape shape={activeShape} /> : null}</DragOverlay>
+        </DndContext>
+      </div>
     </section>
   )
 }
