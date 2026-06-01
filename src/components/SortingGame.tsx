@@ -39,7 +39,6 @@ function DraggableShape({ shape, disabled = false }: { shape: Shape; disabled?: 
       aria-label={`拖拉 ${shape.name}`}
     >
       <ShapePreview shape={shape} />
-      <span>{shape.name}</span>
     </button>
   )
 }

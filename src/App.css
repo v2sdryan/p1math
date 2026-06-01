@@ -358,7 +358,7 @@
 
 .shape-token {
   min-width: 0;
-  min-height: 128px;
+  min-height: 108px;
   padding: 8px;
   border: 1px solid #cfe2e8;
   border-radius: 8px;
@@ -376,27 +376,32 @@
   cursor: grabbing;
 }
 
-.shape-token span {
-  display: block;
-}
-
 .preview-stage {
   display: grid;
   place-items: center;
-  height: 84px;
+  height: 92px;
 }
 
 .preview-stage svg {
-  width: min(142px, 82%);
-  height: 92px;
+  width: min(108px, 68%);
+  height: 74px;
   filter: drop-shadow(0 16px 10px rgba(20, 52, 72, 0.18));
   display: block;
 }
 
 .shape-token--placed {
-  min-height: 112px;
+  min-height: 76px;
   cursor: default;
   box-shadow: none;
+}
+
+.shape-token--placed .preview-stage {
+  height: 58px;
+}
+
+.shape-token--placed .preview-stage svg {
+  width: min(88px, 62%);
+  height: 54px;
 }
 
 .feedback-line {
@@ -686,22 +691,31 @@
   }
 
   .shape-token {
-    min-height: 88px;
+    min-height: 74px;
     padding: 5px;
     font-size: 14px;
   }
 
   .shape-token--placed {
-    min-height: 72px;
+    min-height: 54px;
   }
 
   .preview-stage {
-    height: 58px;
+    height: 62px;
   }
 
   .preview-stage svg {
-    height: 66px;
-    width: min(108px, 88%);
+    height: 50px;
+    width: min(84px, 58%);
+  }
+
+  .shape-token--placed .preview-stage {
+    height: 44px;
+  }
+
+  .shape-token--placed .preview-stage svg {
+    height: 38px;
+    width: min(70px, 52%);
   }
 
   .feedback-line {
